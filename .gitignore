@@ -1,0 +1,21 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Godot-specific files to ignore
+.import/
+.godot/
+
+# Godot Editor configuration file
+.godot/
+
+# Export presets (can be user-specific)
+export_presets.cfg
+
+# OS-specific files (macOS)
+.DS_Store
+
+# Other build artifacts
+*.exe
+*.log
+*.pck
