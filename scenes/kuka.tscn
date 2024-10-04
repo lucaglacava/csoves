@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://dnf0x5r72bkmb"]
+
+[ext_resource type="Script" path="res://scripts/kuka.gd" id="1_milit"]
+[ext_resource type="Texture2D" uid="uid://jdai35ca4o76" path="res://assets/specialtiles.png" id="2_2ew16"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sqx2p"]
+atlas = ExtResource("2_2ew16")
+region = Rect2(192, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0b45j"]
+atlas = ExtResource("2_2ew16")
+region = Rect2(256, 192, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_drhyd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sqx2p")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0b45j")
+}],
+"loop": true,
+"name": &"full",
+"speed": 0.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4wfm6"]
+radius = 50.0
+height = 102.0
+
+[node name="Kuka" type="Node2D"]
+script = ExtResource("1_milit")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = -1
+position = Vector2(1, 0)
+sprite_frames = SubResource("SpriteFrames_drhyd")
+animation = &"empty"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_4wfm6")
+
+[node name="refill timer" type="Timer" parent="."]
+wait_time = 10.29
+one_shot = true
+
+[node name="Marker2D" type="Marker2D" parent="."]
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="timeout" from="refill timer" to="." method="_on_refill_timer_timeout"]

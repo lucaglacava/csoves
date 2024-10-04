@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://wr87518ltk58"]
+
+[ext_resource type="Texture2D" uid="uid://jdai35ca4o76" path="res://assets/specialtiles.png" id="1_yvkhn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g2own"]
+size = Vector2(65, 188)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_yvkhn")
+region_enabled = true
+region_rect = Rect2(0, 128, 64, 192)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_as_relative = false
+position = Vector2(-0.5, 2)
+shape = SubResource("RectangleShape2D_g2own")

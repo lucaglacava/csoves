@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://psknrjix1auq"]
+
+[ext_resource type="Texture2D" uid="uid://bfysd34ca7hy5" path="res://assets/cigihp.png" id="1_0lrei"]
+[ext_resource type="Script" path="res://scripts/ciggui.gd" id="1_n2ebg"]
+
+[node name="cigGUI" type="Panel"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(256, 65)
+offset_right = 256.0
+offset_bottom = 65.0
+script = ExtResource("1_n2ebg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_0lrei")
+centered = false
+vframes = 12
+frame = 11
+region_rect = Rect2(0, 0, 256, 720)

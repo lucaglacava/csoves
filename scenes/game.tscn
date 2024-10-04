@@ -1,0 +1,317 @@
+[gd_scene load_steps=30 format=3 uid="uid://c2n1cucjn0dfc"]
+
+[ext_resource type="PackedScene" uid="uid://rb8v58xhru72" path="res://scenes/player.tscn" id="1_37rhy"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_70nbs"]
+[ext_resource type="Texture2D" uid="uid://bmxhvbo3vctj6" path="res://assets/background.png" id="2_ma5hp"]
+[ext_resource type="Texture2D" uid="uid://rg2u67f4fa14" path="res://assets/beer.png" id="4_4xtbm"]
+[ext_resource type="Texture2D" uid="uid://ctsmdqsm1kxb5" path="res://assets/specialtiles2.png" id="4_yib1i"]
+[ext_resource type="Texture2D" uid="uid://dx62wy7nt44es" path="res://assets/floor.png" id="5_fs1hw"]
+[ext_resource type="Texture2D" uid="uid://jdai35ca4o76" path="res://assets/specialtiles.png" id="5_p0w68"]
+[ext_resource type="PackedScene" uid="uid://dnf0x5r72bkmb" path="res://scenes/kuka.tscn" id="6_fspju"]
+[ext_resource type="PackedScene" uid="uid://coaivknlirgsu" path="res://scenes/enemy_1.tscn" id="7_1mqek"]
+[ext_resource type="PackedScene" uid="uid://d0mdbi6cebovi" path="res://scenes/hearts_container.tscn" id="8_eqnoy"]
+[ext_resource type="Script" path="res://scripts/canvas_layer.gd" id="10_el6yt"]
+
+[sub_resource type="GDScript" id="GDScript_xtinf"]
+script/source = "extends Area2D
+"
+
+[sub_resource type="GDScript" id="GDScript_s1g3c"]
+script/source = "extends Resource
+
+class_name InventoryItem
+
+@export var name: String = \"\"
+@export var texture: Texture2D
+"
+
+[sub_resource type="Resource" id="Resource_pcd7h"]
+script = SubResource("GDScript_s1g3c")
+name = ""
+texture = ExtResource("4_4xtbm")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fi5v3"]
+resource_local_to_scene = true
+
+[sub_resource type="PackedScene" id="PackedScene_mu8lt"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"names": PackedStringArray("collectable", "script", "itemRes", "Area2D", "CollisionShape2D", "shape", "Sprite2D"),
+"node_count": 3,
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 3, 0, -1, 2, 1, 0, 2, 1, 0, 0, 0, 4, 4, -1, 1, 5, 2, 0, 0, 0, 6, 6, -1, 0, 0),
+"variants": [SubResource("GDScript_xtinf"), SubResource("Resource_pcd7h"), SubResource("RectangleShape2D_fi5v3")],
+"version": 3
+}
+
+[sub_resource type="GDScript" id="GDScript_gs85n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5tgbo"]
+resource_local_to_scene = true
+size = Vector2(21, 50)
+
+[sub_resource type="Animation" id="Animation_x20qf"]
+length = 0.001
+step = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2kpoi"]
+resource_name = "spin"
+length = 0.4
+step = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.3, 0.3)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_crvwx"]
+_data = {
+"RESET": SubResource("Animation_x20qf"),
+"spin": SubResource("Animation_2kpoi")
+}
+
+[sub_resource type="PackedScene" id="PackedScene_8mtmg"]
+_bundled = {
+"base_scene": 0,
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"names": PackedStringArray("Beer", "script", "itemRes", "CollisionShape2D", "position", "shape", "Sprite2D", "texture", "AnimationPlayer", "libraries"),
+"node_count": 4,
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 2147483647, 0, -1, 2, 1, 1, 2, 2, 0, 0, 0, 2147483647, 262147, -1, 2, 4, 3, 5, 4, 0, 0, 0, 2147483647, 524294, -1, 1, 7, 5, 0, 0, 0, 8, 786440, -1, 1, 9, 6, 0),
+"variants": [SubResource("PackedScene_mu8lt"), SubResource("GDScript_gs85n"), SubResource("Resource_pcd7h"), Vector2(-1.5, 0), SubResource("RectangleShape2D_5tgbo"), ExtResource("4_4xtbm"), {
+"": SubResource("AnimationLibrary_crvwx")
+}],
+"version": 3
+}
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_5jgg3"]
+resource_name = "collectables"
+scenes/1/scene = SubResource("PackedScene_8mtmg")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_syx7l"]
+texture = ExtResource("2_ma5hp")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vbvk1"]
+texture = ExtResource("4_yib1i")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yq1uc"]
+texture = ExtResource("5_p0w68")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s8ssb"]
+texture = ExtResource("5_fs1hw")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+8:4/0 = 0
+9:4/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_jkihj"]
+tile_size = Vector2i(64, 64)
+sources/5 = SubResource("TileSetAtlasSource_syx7l")
+sources/7 = SubResource("TileSetAtlasSource_vbvk1")
+sources/8 = SubResource("TileSetAtlasSource_yq1uc")
+sources/9 = SubResource("TileSetAtlasSource_s8ssb")
+sources/0 = SubResource("TileSetScenesCollectionSource_5jgg3")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k141o"]
+size = Vector2(968, 171)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_70nbs")
+
+[node name="player" parent="." instance=ExtResource("1_37rhy")]
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+position = Vector2(1, 1)
+zoom = Vector2(3, 3)
+
+[node name="background" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_jkihj")
+format = 2
+layer_0/name = "1"
+layer_0/z_index = -2
+layer_0/tile_data = PackedInt32Array(-131072, 196617, 0, -65536, 196617, 1, 0, 196617, 2, 65536, 196617, 0, 131072, 196617, 0, 196608, 196617, 0, -1, 131081, 0, 65535, 131081, 1, 131071, 131081, 2, 196607, 131081, 1, 262143, 131081, 2, -65537, 131081, 2, -131071, 131081, 2, -65535, 131081, 1, 1, 131081, 2, 65537, 131081, 1, 131073, 9, 2, 196609, 9, 2, 2, 524297, 2, 65538, 524297, 0, 131074, 524297, 1, 196610, 524297, 2, 131070, 589833, 0, 196606, 589833, 1, 262142, 589833, 2, -65538, 589833, 0, -2, 589833, 1, 65534, 589833, 2, 262146, 131081, 3, 327678, 65545, 3, 327675, 327689, 2, 327676, 393225, 2, 327677, 458761, 2, 262147, 327689, 2, 262148, 393225, 2, 262149, 458761, 2, 327674, 131081, 3, 262150, 65545, 3, 65542, 589833, 0, 131078, 589833, 1, 196614, 589833, 2, -131066, 589833, 0, -65530, 589833, 1, 6, 589833, 2, 131066, 524297, 0, 196602, 524297, 1, 262138, 524297, 2, -65542, 524297, 0, -6, 524297, 1, 65530, 524297, 2, 262141, 524297, 4, 262140, 327689, 4, 196604, 327689, 4, 196605, 327689, 4, 196603, 524297, 4, 262139, 524297, 4, 131067, 589833, 3, 131068, 589833, 3, 131069, 327689, 4, 65533, 327689, 4, 65532, 327689, 4, 65531, 589833, 3, -4, 589833, 3, -3, 196617, 4, -5, 589833, 3, -65539, 327689, 4, -65540, 327689, 4, -65541, 327689, 4, 131075, 524297, 4, 65540, 524297, 4, 4, 524297, 4, 3, 524297, 4, -65533, 524297, 4, -131069, 524297, 4, -131068, 524297, 4, -131067, 524297, 4, -65531, 524297, 4, 5, 524297, 4, 65541, 524297, 4, 196611, 589833, 3, 196612, 589833, 3, 131076, 262153, 3, 131077, 589833, 3, 196613, 589833, 3, 65539, 589833, 3, -65532, 589833, 3, -131077, 327689, 3, -131076, 393225, 3, -131075, 458761, 3, -196605, 327689, 3, -196604, 393225, 3, -196603, 458761, 3, -131074, 65545, 4, -196602, 65545, 4, -131078, 131081, 4, -196608, 196617, 0, -131073, 65545, 1, -196607, 65545, 1, 327679, 65545, 1, 262145, 65545, 1, 262144, 196617, 0, 393215, 327689, 0, 327680, 393225, 0, 327681, 458761, 0, 393212, 327689, 1, 393213, 393225, 1, 393214, 458761, 1, 327682, 327689, 1, 327683, 327689, 1, 327684, 327689, 1, 327685, 327689, 1, 393211, 327689, 1, 393210, 327689, 1, 327686, 327689, 1, -196614, 327689, 1, -196613, 327689, 1, -196612, 327689, 1, -196611, 327689, 1, -196610, 327689, 1, -196609, 327689, 0, -262144, 393225, 0, -262143, 458761, 0, -262142, 327689, 1, -262141, 327689, 1, -262140, 327689, 1, -262139, 327689, 1, -262138, 327689, 1, -262137, 327689, 1, -196601, 65545, 1, -131065, 65545, 1, -65529, 65545, 1, 7, 65545, 1, 65543, 65545, 1, 131079, 65545, 1, 196615, 65545, 1, 262151, 65545, 1, 327687, 327689, 1, 393209, 327689, 1, 327673, 65545, 1, 262137, 65545, 1, 196601, 65545, 1, 131065, 65545, 1, 65529, 65545, 1, -7, 65545, 1, -65543, 65545, 1, -131079, 65545, 1, -196615, 327689, 1, -65534, 524297, 1, -131070, 524297, 0, -196606, 131081, 4, -262151, 327689, 2, -262150, 327689, 2, -262149, 393225, 2, -262148, 458761, 2, -262147, 327689, 2, -262146, 393225, 2, -262145, 458761, 2, -327680, 327689, 2, -327679, 327689, 2, -327678, 393225, 2, -327677, 458761, 2, -327676, 327689, 2, -327675, 393225, 2, -327673, 393225, 2, -327687, 327689, 4, -327686, 262153, 3, -327685, 327689, 4, -327684, 327689, 4, -327683, 524297, 4, -393214, 524297, 4, -327682, 524297, 4, -327681, 327689, 4, -393216, 524297, 4, -393215, 262153, 4, -393213, 327689, 4, -393212, 327689, 4, -393211, 327689, 4, -393209, 327689, 4, -393223, 8, 2, -393222, 8, 2, -393221, 8, 2, -393220, 8, 2, -393219, 65544, 3, -458750, 8, 2, -458749, 8, 2, -458748, 8, 2, -458747, 8, 2, -458746, 8, 2, -458745, 8, 2, -458759, 8, 2, -458758, 65544, 2, -458757, 8, 2, -458756, 8, 2, -458755, 8, 2, -524286, 8, 3, -524285, 8, 4, -524284, 8, 2, -524283, 8, 2, -524282, 8, 2, -524281, 8, 2, -589818, 8, 2, -589819, 8, 2, -589820, 8, 2, -589821, 8, 2, -589822, 8, 2, -524291, 8, 2, -524292, 8, 2, -524293, 8, 2, -524294, 8, 2, -524295, 8, 2, -589817, 8, 2, -327674, 458761, 2, -393210, 196617, 268435460, 458745, 327689, 3, 458746, 393225, 3, 458747, 458761, 3, 458748, 327689, 3, 458749, 393225, 3, 458750, 327689, 3, 458751, 393225, 3, 393216, 327689, 3, 393217, 393225, 3, 393218, 458761, 3, 393219, 393225, 3, 393220, 458761, 3, 393221, 327689, 3, 393222, 393225, 3, 393223, 458761, 3, 524281, 327689, 2, 524282, 393225, 2, 524283, 458761, 2, 524284, 327689, 2, 458752, 458761, 2, 458754, 393225, 2, 458755, 393225, 2, 458756, 458761, 2, 524285, 393225, 2, 524286, 327689, 2, 524287, 393225, 2, 458753, 393225, 2, 458757, 327689, 2, 458758, 393225, 2, 458759, 458761, 2, 458744, 131081, 4, 393224, 65545, 4, 524280, 131081, 3, 458760, 65545, 3, 524288, 131081, 1, 589824, 65545, 1, 589816, 9, 1, 655352, 9, 2, 589817, 65545, 1, 655353, 65545, 2, 589818, 9, 1, 655354, 9, 2, 589819, 65545, 1, 655355, 65545, 2, 589820, 9, 1, 655356, 9, 2, 589821, 65545, 1, 655357, 65545, 2, 589822, 9, 1, 655358, 9, 2, 589823, 65545, 1, 655359, 65545, 2, 524289, 9, 1, 589825, 9, 2, 524290, 65545, 1, 589826, 65545, 2, 524291, 9, 1, 589827, 9, 2, 524292, 65545, 1, 589828, 65545, 2, 524293, 9, 1, 589829, 9, 2, 524294, 65545, 1, 589830, 65545, 2, 524295, 9, 1, 589831, 9, 2, 524296, 65545, 1, 589832, 65545, 2, 262136, 9, 4, 327672, 65545, 1, 393208, 327689, 1, -8, 65545, 0, 65528, 65545, 0, 131064, 65545, 1, 196600, 9, 3, -196616, 327689, 1, -131080, 65545, 1, -65544, 65545, 2, -262136, 327689, 1, -196600, 65545, 1, -131064, 65545, 2, -65528, 65545, 0, 8, 65545, 1, 65544, 65545, 2, 131080, 65545, 0, 196616, 65545, 0, 262152, 65545, 1, 327688, 327689, 1, -262152, 393225, 2, -327672, 393225, 2, -327688, 589833, 3, -393208, 589833, 3, -393218, 8, 2, -458754, 8, 2, -524290, 8, 2, -458752, 8, 2, -524288, 8, 2, -589824, 8, 2, -524289, 8, 2, -458753, 8, 2, -393217, 8, 2, -589823, 8, 2, -524287, 8, 2, -458751, 8, 2)
+layer_1/name = "2"
+layer_1/z_index = -1
+layer_2/name = "3"
+layer_2/tile_data = PackedInt32Array(65534, 262152, 2, -2, 196616, 1)
+layer_3/name = "collectables"
+layer_3/tile_data = PackedInt32Array(131067, 0, 65536, -196605, 0, 65536, -131075, 0, 65536, -131077, 0, 65536, -65533, 0, 65536, -65531, 0, 65536)
+
+[node name="Kukas" type="Node" parent="."]
+
+[node name="Kuka" parent="Kukas" instance=ExtResource("6_fspju")]
+position = Vector2(-103, 92)
+
+[node name="Kuka2" parent="Kukas" instance=ExtResource("6_fspju")]
+position = Vector2(-68, -319)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(29, -490.5)
+shape = SubResource("RectangleShape2D_k141o")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(35, -412)
+polygon = PackedVector2Array(-122, 119, -128, 88, -124, 67, -112, 63, -96, 62, -81, 72, -80, 94, -85, 120)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(0, -1)
+polygon = PackedVector2Array(-122, 119, -128, 88, -124, 67, -112, 63, -96, 62, -81, 72, -80, 94, -85, 120)
+
+[node name="enemy_1" parent="." instance=ExtResource("7_1mqek")]
+position = Vector2(-24, 201)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("10_el6yt")
+
+[node name="HeartsContainer" parent="CanvasLayer" instance=ExtResource("8_eqnoy")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
